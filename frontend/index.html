@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Docx Uploader</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Загрузите .docx файл</h1>
+    <div id="drop-area">
+      <div id="prompt">
+        <p>Перетащите файл сюда</p>
+        <input type="file" id="fileElem" accept=".docx">
+        <label class="button" for="fileElem">или выберите файл</label>
+      </div>
+      <div id="file-info">
+        <span class="file-icon hidden">📄</span>
+        <span id="file-name"></span>
+      </div>
+    </div>
+    <button id="uploadBtn" disabled>Отправить</button>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

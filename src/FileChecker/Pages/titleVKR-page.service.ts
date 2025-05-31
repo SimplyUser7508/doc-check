@@ -8,457 +8,446 @@ export class TitleVkrPage {
     titleVkrPage(xmlData: string): string {
         const paragraphs = xmlData.split(/<\/w:p>/g);
 
-        paragraphs[0] = this.fileChecker.replaceIndentation(
-            this.fileChecker.replaceAlignment(
-                this.fileChecker.removeBold(
-                    this.fileChecker.removeItalics(
-                        this.fileChecker.replaceColor(
-                            this.fileChecker.replaceLetterSpacing(
-                                this.fileChecker.replaceFontSize(paragraphs[0], "23"),
-                                "0")
-                        )
-                    )
-                ),
-                "center"
-            ),
-            "0", "0", "0"
+        const titleIndex = paragraphs.findIndex(p =>
+            /<w:t[^>]*>[^<]*выпускная[^<]*<\/w:t>/i.test(p)
         );
-        paragraphs[1] = this.fileChecker.replaceIndentation(
-            this.fileChecker.replaceAlignment(
-                this.fileChecker.removeBold(
-                    this.fileChecker.removeItalics(
-                        this.fileChecker.replaceColor(
-                            this.fileChecker.replaceLetterSpacing(
-                                this.fileChecker.replaceFontSize(paragraphs[1], "24"),
-                                "0")
-                        )
-                    )
-                ),
-                "center"
-            ),
-            "0", "0", "0"
+
+        console.log("titleIndex", titleIndex);
+
+        const selfIndex = paragraphs.findIndex(p =>
+            /<w:t[^>]*>[^<]*работу[^<]*<\/w:t>/i.test(p)
         );
-        paragraphs[2] = this.fileChecker.replaceIndentation(
-            this.fileChecker.replaceAlignment(
-                this.fileChecker.removeBold(
-                    this.fileChecker.removeItalics(
-                        this.fileChecker.replaceColor(
-                            this.fileChecker.replaceLetterSpacing(
-                                this.fileChecker.replaceFontSize(paragraphs[2], "24"),
-                                "0")
-                        )
-                    )
-                ),
-                "center"
-            ),
-            "0", "0", "0"
+
+        console.log("selfIndex", selfIndex);
+
+        const normcontrollIndex = paragraphs.findIndex(p =>
+            /<w:t[^>]*>[^<]*нормоконтролер[^<]*<\/w:t>/i.test(p)
         );
-        paragraphs[3] = this.fileChecker.replaceIndentation(
-            this.fileChecker.replaceAlignment(
-                this.fileChecker.makeBold(
-                    this.fileChecker.removeItalics(
-                        this.fileChecker.replaceColor(
-                            this.fileChecker.replaceLetterSpacing(
-                                this.fileChecker.replaceFontSize(paragraphs[3], "28"),
-                                "0")
-                        )
-                    )
-                ),
-                "center"
-            ),
-            "0", "0", "0"
-        );
-        paragraphs[4] = this.fileChecker.replaceIndentation(
-            this.fileChecker.replaceAlignment(
-                this.fileChecker.makeBold(
-                    this.fileChecker.removeItalics(
-                        this.fileChecker.replaceColor(
-                            this.fileChecker.replaceLetterSpacing(
-                                this.fileChecker.replaceFontSize(paragraphs[4], "28"),
-                                "0")
-                        )
-                    )
-                ),
-                "center"
-            ),
-            "0", "0", "0"
-        );
-        paragraphs[5] = this.fileChecker.replaceIndentation(
-            this.fileChecker.replaceAlignment(
-                this.fileChecker.removeBold(
-                    this.fileChecker.removeItalics(
-                        this.fileChecker.replaceColor(
-                            this.fileChecker.replaceLetterSpacing(
-                                this.fileChecker.replaceFontSize(paragraphs[5], "28"),
-                                "0")
-                        )
-                    )
-                ),
-                "center"
-            ),
-            "0", "0", "0"
-        );
-        paragraphs[6] = this.fileChecker.replaceIndentation(
-            this.fileChecker.replaceAlignment(
-                this.fileChecker.makeBold(
-                    this.fileChecker.removeItalics(
-                        this.fileChecker.replaceColor(
-                            this.fileChecker.replaceLetterSpacing(
-                                this.fileChecker.replaceFontSize(paragraphs[6], "28"),
-                                "0")
-                        )
-                    )
-                ),
-                "center"
-            ),
-            "0", "0", "0"
-        );
-        paragraphs[7] = this.fileChecker.replaceIndentation(
-            this.fileChecker.replaceAlignment(
-                this.fileChecker.removeItalics(
-                    this.fileChecker.removeItalics(
-                        this.fileChecker.replaceColor(
-                            this.fileChecker.replaceLetterSpacing(
-                                this.fileChecker.replaceFontSize(paragraphs[7], "16"),
-                                "0")
-                        )
-                    )
-                ),
-                "center"
-            ),
-            "0", "0", "0"
-        );
-        paragraphs[8] = this.fileChecker.replaceIndentation(
-            this.fileChecker.replaceAlignment(
-                this.fileChecker.makeBold(
-                    this.fileChecker.removeItalics(
-                        this.fileChecker.replaceColor(
-                            this.fileChecker.replaceLetterSpacing(
-                                this.fileChecker.replaceFontSize(paragraphs[8], "28"),
-                                "0")
-                        )
-                    )
-                ),
-                "center"
-            ),
-            "0", "0", "0"
-        );
-        paragraphs[9] = this.fileChecker.replaceIndentation(
-            this.fileChecker.replaceAlignment(
-                this.fileChecker.removeBold(
-                    this.fileChecker.removeItalics(
-                        this.fileChecker.replaceColor(
-                            this.fileChecker.replaceLetterSpacing(
-                                this.fileChecker.replaceFontSize(paragraphs[9], "16"),
-                                "0")
-                        )
-                    )
-                ),
-                "center"
-            ),
-            "0", "0", "0"
-        );
-        paragraphs[10] = this.fileChecker.removeBold(
-            this.fileChecker.removeItalics(
-                this.fileChecker.replaceColor(
-                    this.fileChecker.replaceLetterSpacing(
-                        this.fileChecker.replaceFontSize(paragraphs[10], "16"),
-                        "0")
-                )
-            )
-        );
-        for (let i = 11; i <= 13; i++) {
-            paragraphs[i] = this.fileChecker.replaceIndentation(
-                this.fileChecker.removeBold(
-                    this.fileChecker.removeItalics(
-                        this.fileChecker.replaceColor(
-                            this.fileChecker.replaceAlignment(
-                                this.fileChecker.replaceLetterSpacing(
-                                    this.fileChecker.replaceFontSize(paragraphs[i], "28"),
-                                    "0"),
-                                "left"
-                            )
-                        )
-                    )
-                ),
-                "5103", "0", "992"
-            );
-        }
-        paragraphs[14] = this.fileChecker.replaceIndentation(
-            this.fileChecker.removeBold(
-                this.fileChecker.removeItalics(
-                    this.fileChecker.replaceColor(
-                        this.fileChecker.replaceAlignment(
-                            this.fileChecker.replaceLetterSpacing(
-                                this.fileChecker.replaceFontSize(paragraphs[14], "16"),
-                                "0"),
-                            "left"
-                        )
-                    )
-                )
-            ),
-            "5103", "0", "992"
-        );
-        paragraphs[15] = this.fileChecker.replaceIndentation(
-            this.fileChecker.removeBold(
-                this.fileChecker.removeItalics(
-                    this.fileChecker.replaceColor(
-                        this.fileChecker.replaceAlignment(
-                            this.fileChecker.replaceLetterSpacing(
-                                this.fileChecker.replaceFontSize(paragraphs[15], "28"),
-                                "0"),
-                            "left"
-                        )
-                    )
-                )
-            ),
-            "5103", "0", "992"
-        );
-        paragraphs[16] = this.fileChecker.replaceIndentation(
-            this.fileChecker.removeBold(
-                this.fileChecker.removeItalics(
-                    this.fileChecker.replaceColor(
-                        this.fileChecker.replaceAlignment(
-                            this.fileChecker.replaceLetterSpacing(
-                                this.fileChecker.replaceFontSize(paragraphs[16], "16"),
-                                "0"),
-                            "left"
-                        )
-                    )
-                )
-            ),
-            "5103", "0", "992"
-        );
-        paragraphs[17] = this.fileChecker.replaceIndentation(
-            this.fileChecker.removeBold(
-                this.fileChecker.removeItalics(
-                    this.fileChecker.replaceColor(
-                        this.fileChecker.replaceAlignment(
-                            this.fileChecker.replaceLetterSpacing(
-                                this.fileChecker.replaceFontSize(paragraphs[17], "28"),
-                                "0"),
-                            "left"
-                        )
-                    )
-                )
-            ),
-            "5103", "0", "992"
-        );
-        paragraphs[18] = this.fileChecker.removeBold(
-            this.fileChecker.removeItalics(
-                this.fileChecker.replaceColor(
-                    this.fileChecker.replaceLetterSpacing(
-                        this.fileChecker.replaceFontSize(paragraphs[18], "28"),
-                        "0")
-                )
-            )
-        );
-        paragraphs[19] = this.fileChecker.removeBold(
-            this.fileChecker.removeItalics(
-                this.fileChecker.replaceColor(
-                    this.fileChecker.replaceLetterSpacing(
-                        this.fileChecker.replaceFontSize(paragraphs[19], "28"),
-                        "0")
-                )
-            )
-        );
-        paragraphs[20] = this.fileChecker.replaceIndentation(
-            this.fileChecker.replaceAlignment(
-                this.fileChecker.makeBold(
-                    this.fileChecker.removeItalics(
-                        this.fileChecker.replaceColor(
-                            this.fileChecker.replaceLetterSpacing(
-                                this.fileChecker.replaceFontSize(paragraphs[20], "28"),
-                                "40")
-                        )
-                    )
-                ),
-                "center"
-            ),
-            "0", "0", "0"
-        );
-        paragraphs[21] = this.fileChecker.replaceIndentation(
-            this.fileChecker.replaceAlignment(
-                this.fileChecker.makeBold(
-                    this.fileChecker.removeItalics(
-                        this.fileChecker.replaceColor(
-                            this.fileChecker.replaceLetterSpacing(
-                                this.fileChecker.replaceFontSize(paragraphs[21], "28"),
-                                "40")
-                        )
-                    )
-                ),
-                "center"
-            ),
-            "0", "0", "0"
-        );
-        paragraphs[22] = this.fileChecker.replaceIndentation(
-            this.fileChecker.replaceAlignment(
-                this.fileChecker.removeBold(
-                    this.fileChecker.removeItalics(
-                        this.fileChecker.replaceColor(
-                            this.fileChecker.replaceLetterSpacing(
-                                this.fileChecker.replaceFontSize(paragraphs[22], "28"),
-                                "0")
-                        )
-                    )
-                ),
-                "center"
-            ),
-            "0", "0", "0"
-        );
-        paragraphs[23] = this.fileChecker.replaceIndentation(
-            this.fileChecker.replaceAlignment(
-                this.fileChecker.makeBold(
-                    this.fileChecker.removeItalics(
-                        this.fileChecker.replaceColor(
-                            this.fileChecker.replaceLetterSpacing(
-                                this.fileChecker.replaceFontSize(paragraphs[23], "30"),
-                                "1")
-                        )
-                    )
-                ),
-                "center"
-            ),
-            "0", "0", "0"
-        );
-        paragraphs[24] = this.fileChecker.replaceIndentation(
-            this.fileChecker.replaceAlignment(
-                this.fileChecker.makeBold(
-                    this.fileChecker.removeItalics(
-                        this.fileChecker.replaceColor(
-                            this.fileChecker.replaceLetterSpacing(
-                                this.fileChecker.replaceFontSize(paragraphs[24], "30"),
-                                "1")
-                        )
-                    )
-                ),
-                "center"
-            ),
-            "0", "0", "0"
-        );
-        for (let i = 25; i <= 34; i++) {
-            paragraphs[i] = this.fileChecker.replaceIndentation(
+        
+        console.log("normcontrollIndex", normcontrollIndex);
+
+        paragraphs[0] = this.fileChecker.replaceLineSpacing(
+            this.fileChecker.replaceIndentation(
                 this.fileChecker.replaceAlignment(
                     this.fileChecker.removeBold(
                         this.fileChecker.removeItalics(
                             this.fileChecker.replaceColor(
                                 this.fileChecker.replaceLetterSpacing(
-                                    this.fileChecker.replaceFontSize(paragraphs[i], "28"),
+                                    this.fileChecker.replaceFontSize(paragraphs[0], "23"),
                                     "1")
-                            )
-                        )
-                    ),
-                    "left"
-                ),
-                "0", "0", "0"
-            );
-        }
-        paragraphs[35] = this.fileChecker.replaceIndentation(
-            this.fileChecker.replaceAlignment(
-                this.fileChecker.removeBold(
-                    this.fileChecker.removeItalics(
-                        this.fileChecker.replaceColor(
-                            this.fileChecker.replaceLetterSpacing(
-                                this.fileChecker.replaceFontSize(paragraphs[35], "28"),
-                                "0")
-                        )
-                    )
-                ),
-                "left"
-            ),
-            "0", "0", "0"
-        );
-        paragraphs[36] = this.fileChecker.replaceIndentation(
-            this.fileChecker.replaceAlignment(
-                this.fileChecker.removeBold(
-                    this.fileChecker.removeItalics(
-                        this.fileChecker.replaceColor(
-                            this.fileChecker.replaceLetterSpacing(
-                                this.fileChecker.replaceFontSize(paragraphs[36], "16"),
-                                "1")
-                        )
-                    )
-                ),
-                "left"
-            ),
-            "0", "0", "0"
-        );
-        paragraphs[37] = this.fileChecker.replaceIndentation(
-            this.fileChecker.replaceAlignment(
-                this.fileChecker.removeBold(
-                    this.fileChecker.removeItalics(
-                        this.fileChecker.replaceColor(
-                            this.fileChecker.replaceLetterSpacing(
-                                this.fileChecker.replaceFontSize(paragraphs[37], "28"),
-                                "1")
-                        )
-                    )
-                ),
-                "left"
-            ),
-            "0", "0", "0"
-        );
-        paragraphs[38] = this.fileChecker.replaceIndentation(
-            this.fileChecker.replaceAlignment(
-                this.fileChecker.removeBold(
-                    this.fileChecker.removeItalics(
-                        this.fileChecker.replaceColor(
-                            this.fileChecker.replaceLetterSpacing(
-                                this.fileChecker.replaceFontSize(paragraphs[38], "28"),
-                                "1")
-                        )
-                    )
-                ),
-                "left"
-            ),
-            "0", "0", "0"
-        );
-        paragraphs[39] = this.fileChecker.replaceIndentation(
-            this.fileChecker.replaceAlignment(
-                this.fileChecker.removeBold(
-                    this.fileChecker.removeItalics(
-                        this.fileChecker.replaceColor(
-                            this.fileChecker.replaceLetterSpacing(
-                                this.fileChecker.replaceFontSize(paragraphs[39], "16"),
-                                "1")
-                        )
-                    )
-                ),
-                "left"
-            ),
-            "0", "0", "0"
-        );
-        paragraphs[40] = this.fileChecker.replaceIndentation(
-            this.fileChecker.replaceAlignment(
-                this.fileChecker.removeBold(
-                    this.fileChecker.removeItalics(
-                        this.fileChecker.replaceColor(
-                            this.fileChecker.replaceLetterSpacing(
-                                this.fileChecker.replaceFontSize(paragraphs[40], "28"),
-                                "1")
-                        )
-                    )
-                ),
-                "left"
-            ),
-            "0", "0", "0"
-        );
-        for (let i = 41; i <= 44; i++) {
-            paragraphs[i] = this.fileChecker.replaceIndentation(
-                this.fileChecker.replaceAlignment(
-                    this.fileChecker.removeBold(
-                        this.fileChecker.removeItalics(
-                            this.fileChecker.replaceColor(
-                                this.fileChecker.replaceLetterSpacing(
-                                    this.fileChecker.replaceFontSize(paragraphs[i], "28"),
-                                    "0")
                             )
                         )
                     ),
                     "center"
                 ),
                 "0", "0", "0"
+            ),
+            "240"
+        );
+        paragraphs[1] = this.fileChecker.replaceLineSpacing(
+            this.fileChecker.replaceIndentation(
+                this.fileChecker.replaceAlignment(
+                    this.fileChecker.removeBold(
+                        this.fileChecker.removeItalics(
+                            this.fileChecker.replaceColor(
+                                this.fileChecker.replaceLetterSpacing(
+                                    this.fileChecker.replaceFontSize(paragraphs[1], "24"),
+                                    "1")
+                            )
+                        )
+                    ),
+                    "center"
+                ),
+                "0", "0", "0"
+            ),
+            "240"
+        );
+        paragraphs[2] = this.fileChecker.replaceLineSpacing(
+            this.fileChecker.replaceIndentation(
+                this.fileChecker.replaceAlignment(
+                    this.fileChecker.removeBold(
+                        this.fileChecker.removeItalics(
+                            this.fileChecker.replaceColor(
+                                this.fileChecker.replaceLetterSpacing(
+                                    this.fileChecker.replaceFontSize(paragraphs[2], "24"),
+                                    "1")
+                            )
+                        )
+                    ),
+                    "center"
+                ),
+                "0", "0", "0"
+            ),
+            "240"
+        );
+        paragraphs[3] = this.fileChecker.replaceLineSpacing(
+            this.fileChecker.replaceIndentation(
+                this.fileChecker.replaceAlignment(
+                    this.fileChecker.makeBold(
+                        this.fileChecker.removeItalics(
+                            this.fileChecker.replaceColor(
+                                this.fileChecker.replaceLetterSpacing(
+                                    this.fileChecker.replaceFontSize(paragraphs[3], "28"),
+                                    "1")
+                            )
+                        )
+                    ),
+                    "center"
+                ),
+                "0", "0", "709"
+            ),
+            "276"
+        );
+        paragraphs[4] = this.fileChecker.replaceLineSpacing(
+            this.fileChecker.replaceIndentation(
+                this.fileChecker.replaceAlignment(
+                    this.fileChecker.makeBold(
+                        this.fileChecker.removeItalics(
+                            this.fileChecker.replaceColor(
+                                this.fileChecker.replaceLetterSpacing(
+                                    this.fileChecker.replaceFontSize(paragraphs[4], "28"),
+                                    "1")
+                            )
+                        )
+                    ),
+                    "center"
+                ),
+                "0", "0", "709"
+            ),
+            "276"
+        );
+        paragraphs[5] = this.fileChecker.replaceLineSpacing(
+            this.fileChecker.replaceIndentation(
+                this.fileChecker.replaceAlignment(
+                    this.fileChecker.makeBold(
+                        this.fileChecker.removeItalics(
+                            this.fileChecker.replaceColor(
+                                this.fileChecker.replaceLetterSpacing(
+                                    this.fileChecker.replaceFontSize(paragraphs[5], "28"),
+                                    "1")
+                            )
+                        )
+                    ),
+                    "center"
+                ),
+                "0", "0", "709"
+            ),
+            "276"
+        );
+        paragraphs[6] = this.fileChecker.replaceLineSpacing(
+            this.fileChecker.replaceIndentation(
+                this.fileChecker.replaceAlignment(
+                    this.fileChecker.makeBold(
+                        this.fileChecker.removeItalics(
+                            this.fileChecker.replaceColor(
+                                this.fileChecker.replaceLetterSpacing(
+                                    this.fileChecker.replaceFontSize(paragraphs[6], "28"),
+                                    "0")
+                            )
+                        )
+                    ),
+                    "center"
+                ),
+                "0", "0", "709"
+            ),
+            "276"
+        );
+        for (let i = 7; i <= 14; i++) {
+            if (i === 10) {
+                paragraphs[10] = this.fileChecker.replaceLineSpacing(
+                    this.fileChecker.replaceIndentation(
+                        this.fileChecker.replaceAlignment(
+                            this.fileChecker.removeBold(
+                                this.fileChecker.removeItalics(
+                                    this.fileChecker.replaceColor(
+                                        this.fileChecker.replaceLetterSpacing(
+                                            this.fileChecker.replaceFontSize(paragraphs[10], "28"),
+                                            "1")
+                                    )
+                                )
+                            ),
+                            "both"
+                        ),
+                        "6095", "0", "0"
+                    ),
+                    "240"
+                );
+            };
+            if (i === 11) {
+                paragraphs[11] = this.fileChecker.replaceLineSpacing(
+                    this.fileChecker.replaceIndentation(
+                        this.fileChecker.replaceAlignment(
+                            this.fileChecker.removeBold(
+                                this.fileChecker.removeItalics(
+                                    this.fileChecker.replaceColor(
+                                        this.fileChecker.replaceLetterSpacing(
+                                            this.fileChecker.replaceFontSize(paragraphs[11], "16"),
+                                            "1")
+                                    )
+                                )
+                            ),
+                            "left"
+                        ),
+                        "5103", "0", "992"
+                    ),
+                    "240"
+                );
+            };
+            paragraphs[i] = this.fileChecker.replaceLineSpacing(
+                this.fileChecker.replaceIndentation(
+                    this.fileChecker.replaceAlignment(
+                        this.fileChecker.removeBold(
+                            this.fileChecker.removeItalics(
+                                this.fileChecker.replaceColor(
+                                    this.fileChecker.replaceLetterSpacing(
+                                        this.fileChecker.replaceFontSize(paragraphs[i], "28"),
+                                        "1")
+                                )
+                            )
+                        ),
+                        "both"
+                    ),
+                    "5103", "0", "992"
+                ),
+                "240"
+            );
+        }
+        // paragraphs[15] = this.fileChecker.replaceLineSpacing(
+        //     this.fileChecker.replaceIndentation(
+        //         this.fileChecker.replaceAlignment(
+        //             this.fileChecker.removeBold(
+        //                 this.fileChecker.removeItalics(
+        //                     this.fileChecker.replaceColor(
+        //                         this.fileChecker.replaceLetterSpacing(
+        //                             this.fileChecker.replaceFontSize(paragraphs[15], "24"),
+        //                             "1")
+        //                     )
+        //                 )
+        //             ),
+        //             "both"
+        //         ),
+        //         "5103", "0", "992"
+        //     ),
+        //     "240"
+        // );
+        // paragraphs[16] = this.fileChecker.replaceLineSpacing(
+        //     this.fileChecker.replaceIndentation(
+        //         this.fileChecker.replaceAlignment(
+        //             this.fileChecker.removeBold(
+        //                 this.fileChecker.removeItalics(
+        //                     this.fileChecker.replaceColor(
+        //                         this.fileChecker.replaceLetterSpacing(
+        //                             this.fileChecker.replaceFontSize(paragraphs[16], "24"),
+        //                             "1")
+        //                     )
+        //                 )
+        //             ),
+        //             "both"
+        //         ),
+        //         "0", "0", "0"
+        //     ),
+        //     "276"
+        // );
+        // paragraphs[17] = this.fileChecker.replaceLineSpacing(
+        //     this.fileChecker.replaceIndentation(
+        //         this.fileChecker.replaceAlignment(
+        //             this.fileChecker.removeBold(
+        //                 this.fileChecker.removeItalics(
+        //                     this.fileChecker.replaceColor(
+        //                         this.fileChecker.replaceLetterSpacing(
+        //                             this.fileChecker.replaceFontSize(paragraphs[17], "24"),
+        //                             "1")
+        //                     )
+        //                 )
+        //             ),
+        //             "both"
+        //         ),
+        //         "0", "0", "0"
+        //     ),
+        //     "276"
+        // );
+        // paragraphs[18] = this.fileChecker.replaceLineSpacing(
+        //     this.fileChecker.replaceIndentation(
+        //         this.fileChecker.replaceAlignment(
+        //             this.fileChecker.removeBold(
+        //                 this.fileChecker.removeItalics(
+        //                     this.fileChecker.replaceColor(
+        //                         this.fileChecker.replaceLetterSpacing(
+        //                             this.fileChecker.replaceFontSize(paragraphs[18], "24"),
+        //                             "1")
+        //                     )
+        //                 )
+        //             ),
+        //             "both"
+        //         ),
+        //         "0", "0", "0"
+        //     ),
+        //     "276"
+        // );
+        paragraphs[titleIndex] = this.fileChecker.replaceLineSpacing(
+            this.fileChecker.replaceIndentation(
+                this.fileChecker.replaceAlignment(
+                    this.fileChecker.makeBold(
+                        this.fileChecker.removeItalics(
+                            this.fileChecker.replaceColor(
+                                this.fileChecker.replaceLetterSpacing(
+                                    this.fileChecker.replaceFontSize(paragraphs[titleIndex], "28"),
+                                    "50")
+                            )
+                        )
+                    ),
+                    "center"
+                ),
+                "0", "0", "0"
+            ),
+            "276"
+        );
+        paragraphs[titleIndex + 1] = this.fileChecker.replaceLineSpacing(
+            this.fileChecker.replaceIndentation(
+                this.fileChecker.replaceAlignment(
+                    this.fileChecker.makeBold(
+                        this.fileChecker.removeItalics(
+                            this.fileChecker.replaceColor(
+                                this.fileChecker.replaceLetterSpacing(
+                                    this.fileChecker.replaceFontSize(paragraphs[titleIndex + 1], "28"),
+                                    "1")
+                            )
+                        )
+                    ),
+                    "center"
+                ),
+                "0", "0", "0"
+            ),
+            "276"
+        );
+        paragraphs[titleIndex + 2] = this.fileChecker.replaceLineSpacing(
+            this.fileChecker.replaceIndentation(
+                this.fileChecker.replaceAlignment(
+                    this.fileChecker.makeBold(
+                        this.fileChecker.removeItalics(
+                            this.fileChecker.replaceColor(
+                                this.fileChecker.replaceLetterSpacing(
+                                    this.fileChecker.replaceFontSize(paragraphs[titleIndex + 2], "28"),
+                                    "1")
+                            )
+                        )
+                    ),
+                    "center"
+                ),
+                "0", "0", "0"
+            ),
+            "276"
+        );
+        paragraphs[titleIndex + 3] = this.fileChecker.replaceLineSpacing(
+            this.fileChecker.replaceIndentation(
+                this.fileChecker.replaceAlignment(
+                    this.fileChecker.makeBold(
+                        this.fileChecker.removeItalics(
+                            this.fileChecker.replaceColor(
+                                this.fileChecker.replaceLetterSpacing(
+                                    this.fileChecker.replaceFontSize(paragraphs[titleIndex + 3], "28"),
+                                    "1")
+                            )
+                        )
+                    ),
+                    "center"
+                ),
+                "0", "0", "0"
+            ),
+            "276"
+        );
+        paragraphs[titleIndex + 4] = this.fileChecker.replaceLineSpacing(
+            this.fileChecker.replaceIndentation(
+                this.fileChecker.replaceAlignment(
+                    this.fileChecker.makeBold(
+                        this.fileChecker.removeItalics(
+                            this.fileChecker.replaceColor(
+                                this.fileChecker.replaceLetterSpacing(
+                                    this.fileChecker.replaceFontSize(paragraphs[titleIndex + 4], "28"),
+                                    "1")
+                            )
+                        )
+                    ),
+                    "center"
+                ),
+                "0", "0", "0"
+            ),
+            "276"
+        );
+        paragraphs[titleIndex + 5] = this.fileChecker.replaceLineSpacing(
+            this.fileChecker.replaceIndentation(
+                this.fileChecker.replaceAlignment(
+                    this.fileChecker.removeBold(
+                        this.fileChecker.removeItalics(
+                            this.fileChecker.replaceColor(
+                                this.fileChecker.replaceLetterSpacing(
+                                    this.fileChecker.replaceFontSize(paragraphs[titleIndex + 5], "28"),
+                                    "1")
+                            )
+                        )
+                    ),
+                    "center"
+                ),
+                "0", "0", "0"
+            ),
+            "276"
+        );
+        for (let i = selfIndex; i <= selfIndex + 4; i++) {
+            paragraphs[i] = this.fileChecker.replaceLineSpacing(
+                this.fileChecker.replaceIndentation(
+                    this.fileChecker.replaceAlignment(
+                        this.fileChecker.removeBold(
+                            this.fileChecker.removeItalics(
+                                this.fileChecker.replaceColor(
+                                    this.fileChecker.replaceLetterSpacing(
+                                        this.fileChecker.replaceFontSize(paragraphs[i], "28"),
+                                        "0")
+                                )
+                            )
+                        ),
+                        "both"
+                    ),
+                    "0", "0", "0"
+                ),
+                "360"
+            );
+        }
+        paragraphs[normcontrollIndex] = this.fileChecker.replaceLineSpacing(
+            this.fileChecker.replaceIndentation(
+                this.fileChecker.replaceAlignment(
+                    this.fileChecker.removeBold(
+                        this.fileChecker.removeItalics(
+                            this.fileChecker.replaceColor(
+                                this.fileChecker.replaceLetterSpacing(
+                                    this.fileChecker.replaceFontSize(paragraphs[normcontrollIndex], "28"),
+                                    "0")
+                            )
+                        )
+                    ),
+                    "left"
+                ),
+                "0", "0", "0"
+            ),
+            "360"
+        );
+        for (let i = normcontrollIndex + 1; i <= normcontrollIndex + 3; i++) {
+            paragraphs[i] = this.fileChecker.replaceLineSpacing(
+                this.fileChecker.replaceIndentation(
+                    this.fileChecker.replaceAlignment(
+                        this.fileChecker.removeBold(
+                            this.fileChecker.removeItalics(
+                                this.fileChecker.replaceColor(
+                                    this.fileChecker.replaceLetterSpacing(
+                                        this.fileChecker.replaceFontSize(paragraphs[i], "28"),
+                                        "0")
+                                )
+                            )
+                        ),
+                        "center"
+                    ),
+                    "0", "0", "0"
+                ),
+                "360"
             );
         }
 

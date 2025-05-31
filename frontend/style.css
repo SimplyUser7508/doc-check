@@ -1,0 +1,75 @@
+* {
+    box-sizing: border-box;
+  }
+  body {
+    font-family: Arial, sans-serif;
+    background: #191919;
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .container {
+    background: #7d7dff29;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    text-align: center;
+    width: 320px;
+    color: rgba(255, 255, 255, 0.836);
+  }
+  #drop-area {
+    border: 2px dashed #ccc;
+    border-radius: 6px;
+    padding: 1.5rem;
+    position: relative;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  #drop-area.hover {
+    background: #f8faff;
+  }
+  #prompt p {
+    margin: 0 0 1rem;
+    color: #555;
+  }
+  #prompt input[type="file"] {
+    display: none;
+  }
+  .button {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border: none;
+    background: #007bff;
+    color: rgba(255, 255, 255, 0.884);
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  #file-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    color: #ffffff98;
+  }
+  .file-icon {
+    font-size: 2rem;
+    margin-right: 0.5rem;
+  }
+  .hidden {
+    display: none;
+  }
+  #uploadBtn {
+    margin-top: 1rem;
+    padding: 0.5rem 1.5rem;
+    background: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  #uploadBtn:disabled {
+    background: #aaa;
+    cursor: not-allowed;
+  }

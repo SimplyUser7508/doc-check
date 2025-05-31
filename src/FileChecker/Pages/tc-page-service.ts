@@ -31,9 +31,26 @@ export class ThesisContentPage {
             p.toLowerCase().includes('содержание')
         );
 
-        const introductionIndex = paragraphs.findIndex(p =>
-            /<w:t>\s*введение\s*<\/w:t>/i.test(p)
-        );
+        // const introductionIndex = paragraphs.findIndex(p =>
+        //     /<w:t>\s*введение\s*<\/w:t>/i.test(p)
+        // );
+        function findValidIntroductionIndex(paragraphs: string[]): number {
+            for (let i = 0; i < paragraphs.length - 1; i++) {
+                const current = paragraphs[i];
+                const next = paragraphs[i + 1];
+
+                const isExactIntroduction = /<w:t[^>]*>\s*введение\s*<\/w:t>/i.test(current);
+                const nextHasTextTag = /<w:t[^>]*>.*?<\/w:t>/i.test(next);
+
+                if (isExactIntroduction && !nextHasTextTag) {
+                    return i;
+                }
+            }
+
+            return -1;
+        }
+
+        const introductionIndex = findValidIntroductionIndex(paragraphs);
           
         const notationsListIndex = paragraphs.findIndex(p =>
             /<w:t>\s*перечень сокращений и обозначений\s*<\/w:t>/i.test(p)
@@ -70,7 +87,8 @@ export class ThesisContentPage {
                 )
             )
         );
-        for (let i = thesisContentIndex + 1; i < startIndex; i++) {
+        for (let i = thesisContentIndex + 2; i < startIndex; i++) {
+            if (!paragraphs[i].toLowerCase().includes('</w:hyperlink>')) break;
             const pageNumbersRegex = /^\d{1,2}$/;
             const singleDigitRegex = /\d{1,2}(?!\.\d)\s.+/g;
             const digitWithPointRegex = /\d{1,2}\.\d\s/g;
@@ -84,99 +102,99 @@ export class ThesisContentPage {
             // console.log(extractedText);
 
             if (doublePointRegex.test(combinedText)) {
-                // console.log(paragraphs[i]);
-                // console.log("0");
-                ind = 1419;
-                paragraphs[i] = this.fileChecker.replaceIndentation(
-                    this.fileChecker.removeBold(
-                        this.fileChecker.removeItalics(
-                            this.fileChecker.replaceColor(
-                                this.fileChecker.replaceAlignment(
-                                    this.fileChecker.replaceLetterSpacing(
-                                        this.fileChecker.replaceFontSize(paragraphs[i], "28"),
-                                        "0"),
-                                    "both"
+                ind = 284;
+                paragraphs[i] = this.fileChecker.replaceLineSpacing(
+                    this.fileChecker.replaceIndentation(
+                        this.fileChecker.removeBold(
+                            this.fileChecker.removeItalics(
+                                this.fileChecker.replaceColor(
+                                    this.fileChecker.replaceAlignment(
+                                        this.fileChecker.replaceLetterSpacing(
+                                            this.fileChecker.replaceFontSize(paragraphs[i], "28"),
+                                            "0"),
+                                        "left"
+                                    )
                                 )
                             )
-                        )
-                    ),
-                    "793", "0", "0"
+                        ),
+                        `${ind}`, "567", `${ind}`
+                    ), "360"
                 );
             } else if (digitWithPointRegex.test(combinedText)) {
-                // console.log(paragraphs[i]);
-                // console.log("1");
-                ind = 823;
-                paragraphs[i] = this.fileChecker.replaceIndentation(
-                    this.fileChecker.removeBold(
-                        this.fileChecker.removeItalics(
-                            this.fileChecker.replaceColor(
-                                this.fileChecker.replaceAlignment(
-                                    this.fileChecker.replaceLetterSpacing(
-                                        this.fileChecker.replaceFontSize(paragraphs[i], "28"),
-                                        "0"),
-                                    "both"
+                ind = 142;
+                paragraphs[i] = this.fileChecker.replaceLineSpacing(
+                    this.fileChecker.replaceIndentation(
+                        this.fileChecker.removeBold(
+                            this.fileChecker.removeItalics(
+                                this.fileChecker.replaceColor(
+                                    this.fileChecker.replaceAlignment(
+                                        this.fileChecker.replaceLetterSpacing(
+                                            this.fileChecker.replaceFontSize(paragraphs[i], "28"),
+                                            "0"),
+                                        "left"
+                                    )
                                 )
                             )
-                        )
-                    ),
-                    "397", "0", "0"
+                        ),
+                        `${ind}`, "567", `${ind}`
+                    ), "360"
                 );
             } else if (pageNumbersRegex.test(combinedText)) {
-                // console.log(paragraphs[i]);
-                // console.log("2");
-                paragraphs[i] = this.fileChecker.replaceIndentation(
-                    this.fileChecker.removeBold(
-                        this.fileChecker.removeItalics(
-                            this.fileChecker.replaceColor(
-                                this.fileChecker.replaceAlignment(
-                                    this.fileChecker.replaceLetterSpacing(
-                                        this.fileChecker.replaceFontSize(paragraphs[i], "28"),
-                                        "0"),
-                                    "right"
+                paragraphs[i] = this.fileChecker.replaceLineSpacing(
+                    this.fileChecker.replaceIndentation(
+                        this.fileChecker.removeBold(
+                            this.fileChecker.removeItalics(
+                                this.fileChecker.replaceColor(
+                                    this.fileChecker.replaceAlignment(
+                                        this.fileChecker.replaceLetterSpacing(
+                                            this.fileChecker.replaceFontSize(paragraphs[i], "28"),
+                                            "0"),
+                                        "left"
+                                    )
                                 )
                             )
-                        )
-                    ),
-                    "0", "0", "0"
+                        ),
+                        "0", "567", "0"
+                    ), "360"
                 );
             } else if (singleDigitRegex.test(combinedText) || containsKeyword) {
-                // console.log(paragraphs[i]);
-                // console.log("3");
-                if (!containsKeyword) ind = 199;
+                if (!containsKeyword) ind = 142;
                 if (paragraphs[i].toLocaleLowerCase().includes("приложение")) ind = 1589;
 
-                paragraphs[i] = this.fileChecker.replaceIndentation(
-                    this.fileChecker.removeBold(
-                        this.fileChecker.removeItalics(
-                            this.fileChecker.replaceColor(
-                                this.fileChecker.replaceAlignment(
-                                    this.fileChecker.replaceLetterSpacing(
-                                        this.fileChecker.replaceFontSize(paragraphs[i], "28"),
-                                        "0"),
-                                    "both"
+                paragraphs[i] = this.fileChecker.replaceLineSpacing(
+                    this.fileChecker.replaceIndentation(
+                        this.fileChecker.removeBold(
+                            this.fileChecker.removeItalics(
+                                this.fileChecker.replaceColor(
+                                    this.fileChecker.replaceAlignment(
+                                        this.fileChecker.replaceLetterSpacing(
+                                            this.fileChecker.replaceFontSize(paragraphs[i], "28"),
+                                            "0"),
+                                        "left"
+                                    )
                                 )
                             )
-                        )
-                    ),
-                    "0", "0", "0"
+                        ),
+                        "0", "567", "0"
+                    ), "360"
                 );
             } else if (!containsKeyword) {
-                // console.log(paragraphs[i]);
-                // console.log("4");
-                paragraphs[i] = this.fileChecker.replaceIndentation(
-                    this.fileChecker.removeBold(
-                        this.fileChecker.removeItalics(
-                            this.fileChecker.replaceColor(
-                                this.fileChecker.replaceAlignment(
-                                    this.fileChecker.replaceLetterSpacing(
-                                        this.fileChecker.replaceFontSize(paragraphs[i], "28"),
-                                        "0"),
-                                    "both"
+                paragraphs[i] = this.fileChecker.replaceLineSpacing(
+                    this.fileChecker.replaceIndentation(
+                        this.fileChecker.removeBold(
+                            this.fileChecker.removeItalics(
+                                this.fileChecker.replaceColor(
+                                    this.fileChecker.replaceAlignment(
+                                        this.fileChecker.replaceLetterSpacing(
+                                            this.fileChecker.replaceFontSize(paragraphs[i], "28"),
+                                            "0"),
+                                        "both"
+                                    )
                                 )
                             )
-                        )
-                    ),
-                    `${ind}`, "0", `0`
+                        ),
+                        `${ind}`, "0", `0`
+                    ), "360"
                 );
             }
         }

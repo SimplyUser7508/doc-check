@@ -144,13 +144,25 @@ export class ReferatPage {
 
     referatPage(xmlData: string): string {
         const paragraphs = xmlData.split(/<\/w:p>/g);
-        const referatIndex = paragraphs.findIndex(p => p.toLowerCase().includes('реферат'));
+        const referatIndex: number = paragraphs.findIndex(p => p.toLowerCase().includes('реферат'));
+        let keywordsListIndex: number = -1;
+        for (let i = referatIndex + 1; i < paragraphs.length; i++) {
+            if (paragraphs[i].toLowerCase().includes('выпускная квалификационная работа')) {
+                keywordsListIndex = i + 1;
+                break;
+            }
+        }
+        const drawings = this.countDrawings(xmlData);
+        const tables = this.countTables(xmlData);
+        const sources = this.countSources(paragraphs);
+        const applications = this.countApplications(paragraphs);
 
-        if (!paragraphs[referatIndex + 1].includes('Выпускная квалификационная работа')) {
+        if (keywordsListIndex === -1) {
             const rsid = this.fileChecker.getRsidFromParagraph(paragraphs[referatIndex + 1]);
             const textId = this.fileChecker.getTextIdFromParagraph(paragraphs[referatIndex + 1]);
             this.fileChecker.addTextParagraph(paragraphs, textId, rsid, referatIndex + 1, "28",
-                `Выпускная квалификационная работа (Ваше количество страниц - число) с., ${this.countDrawings(xmlData)} рис., ${this.countTables(xmlData)} табл., ${this.countApplications(paragraphs)} источн., ${this.countSources(paragraphs)} прил.`);
+                `Выпускная квалификационная работа (Ваше количество страниц - число) с., ${drawings} рис., ${tables} табл., ${applications} источн., ${sources} прил.`);
+            keywordsListIndex = referatIndex + 2;
         }
         
         const thesisContentIndex = paragraphs.findIndex(p => p.toLowerCase().includes('содержание'));
@@ -167,11 +179,6 @@ export class ReferatPage {
         }
         
         // console.error("Отладочная информация:", { referatIndex, thesisContentIndex });
-
-        const drawings = this.countDrawings(xmlData);
-        const tables = this.countTables(xmlData);
-        const sources = this.countSources(paragraphs);
-        const applications = this.countApplications(paragraphs);
         
         // console.log(`Рисунков: ${drawings}`);
         // console.log(`Таблиц: ${tables}`);
@@ -179,7 +186,7 @@ export class ReferatPage {
         // console.log(`Приложений: ${applications}`);
         // console.log(paragraphs[referatIndex + 2]);
 
-        paragraphs[referatIndex + 2] = this.ensureUppercaseInWT(paragraphs[referatIndex + 2]);
+        paragraphs[keywordsListIndex] = this.ensureUppercaseInWT(paragraphs[keywordsListIndex]);
 
         paragraphs[referatIndex] = this.fileChecker.makeBold(
             this.fileChecker.removeItalics(
@@ -193,7 +200,7 @@ export class ReferatPage {
                 )
             )
         );
-        if (this.fileChecker.isEmptyOrWhitespace(paragraphs[referatIndex + 1]) == false) {
+        if (this.fileChecker.isEmptyOrWhitespace(paragraphs[referatIndex + 1]) === false) {
             const rsid = this.fileChecker.getRsidFromParagraph(paragraphs[referatIndex]);
             const textId = this.fileChecker.getTextIdFromParagraph(paragraphs[referatIndex]);
             this.fileChecker.addEmptyParagraph(paragraphs, textId, rsid, referatIndex + 1, "28");
@@ -211,7 +218,7 @@ export class ReferatPage {
                 )
             );
         }
-        for (let i = referatIndex + 2; i <= thesisContentIndex; i++) {
+        for (let i = keywordsListIndex; i <= thesisContentIndex; i++) {
             paragraphs[i] = this.fileChecker.removeBold(
                 this.fileChecker.removeItalics(
                     this.fileChecker.replaceColor(

@@ -56,12 +56,40 @@ export class FileCheckerService {
     }
 
     replaceColor(xmlData: string): string {
-        return xmlData.replace(/w:color w:val="[^"]*"/g, 'w:color w:val="000000"'); // "000000" = black
+        return xmlData.replace(/w:color w:val="[^"]*"/g, 'w:color w:val="000000"');
     }
 
     replaceFontSize(xmlData: string, size: string): string {
         return xmlData.replace(/w:sz w:val="[^"]*"/g, `w:sz w:val="${size}"`)
                       .replace(/w:szCs w:val="[^"]*"/g, `w:szCs w:val="${size}"`);
+    }
+
+    makePageBreak(start: string, next: string): [string, string] {
+        let modifiedStart = start;
+        let modifiedNext = next;
+    
+        const lastRIndex = modifiedStart.lastIndexOf('</w:r>');
+        if (lastRIndex !== -1 && !modifiedStart.includes('<w:br w:type="page"/>')) {
+            modifiedStart = modifiedStart.slice(0, lastRIndex) + 
+                            '<w:br w:type="page"/>' + 
+                            modifiedStart.slice(lastRIndex);
+            if(modifiedStart.includes('<w:lastRenderedPageBreak/>')) {
+                modifiedStart = modifiedStart.replace(/<w:lastRenderedPageBreak\/>/g, '');
+            }
+        }
+    
+        const lastNextRIndex = modifiedNext.lastIndexOf('</w:r>');
+        if (lastNextRIndex !== -1 && !modifiedNext.includes('<w:lastRenderedPageBreak/>')) {
+            modifiedNext = modifiedNext.slice(0, lastNextRIndex) + 
+                        '<w:lastRenderedPageBreak/>' + 
+                        modifiedNext.slice(lastNextRIndex);
+        }
+
+        if(modifiedNext.includes('<w:br w:type="page"/>')) {
+            modifiedNext = modifiedNext.replace(/<w:br w:type="page"\/>/g, '');
+        }
+    
+        return [modifiedStart, modifiedNext];
     }
 
     replaceLetterSpacing(xmlData: string, size: string): string {
@@ -74,6 +102,7 @@ export class FileCheckerService {
         });
     }
 
+    //1.0 интервал = w:line="240"   1.15 интервал = w:line="276"   1.5 интервал = w:line="360"   2.0 интервал = w:line="480"
     replaceLineSpacing(xmlData: string, lineSize: string): string {
         return xmlData.replace(/<w:spacing w:line="[^"]*"/g, `<w:spacing w:line="${lineSize}"`);
     }
@@ -81,7 +110,7 @@ export class FileCheckerService {
     replaceAlignment(xmlData: string, alignment: string): string {
         // left, center, right, both
         return xmlData.replace(/<w:pPr>([\s\S]*?)<\/w:pPr>/g, (match, content) => {
-            if (/w:jc w:val="[^"]*"/.test(content)) {
+            if (/w:jc w:val="[^"]*"/g.test(content)) {
                 return match.replace(/w:jc w:val="[^"]*"/g, `w:jc w:val="${alignment}"`);
             } else {
                 return match.replace('</w:pPr>', `<w:jc w:val="${alignment}"/></w:pPr>`);
@@ -89,7 +118,7 @@ export class FileCheckerService {
         });
     }
 
-    //отступы в макете
+    //отступы в макете TWP = см * 567
     replaceIndentation(
         xmlData: string,
         left: string = "0",
@@ -142,7 +171,7 @@ export class FileCheckerService {
         return plainText.length === 0;
     }
 
-    addEmptyParagraph(paragraphs: string[], textId: string, rsid: string, index: number, fontSize: string = "24"): string[] {
+    addEmptyParagraph(paragraphs: string[], textId: string, rsid: string, index: number, fontSize: string = "28"): string[] {
         // Генерация уникальных ID
         const paraId = Math.random().toString(36).substr(2, 8).toUpperCase();
 
@@ -166,7 +195,32 @@ export class FileCheckerService {
         return paragraphs;
     }
 
-    addTextParagraph(paragraphs: string[], textId: string, rsid: string, index: number, fontSize: string = "24", text: string): string[] {
+    addEmptyParagraphWP(paragraphs: string[], textId: string, rsid: string, index: number, fontSize: string = "28"): string[] {
+        // Генерация уникальных ID
+        const paraId = Math.random().toString(36).substr(2, 8).toUpperCase();
+
+        // Генерация пустого абзаца
+        const emptyParagraph = `
+            <w:p w14:paraId="${paraId}" w14:textId="${textId}" w:rsidR="${rsid}" w:rsidRPr="${rsid}" w:rsidRDefault="${rsid}" w:rsidP="${rsid}">
+                <w:pPr>
+                    <w:spacing w:line="360" />
+                    <w:rPr>
+                        <w:sz w:val="${fontSize}"/>
+                        <w:szCs w:val="${fontSize}"/>
+                        <w:spacing w:val="1"/>
+                    </w:rPr>
+                    <w:jc w:val="left"/>
+                </w:pPr>
+            </w:p>
+        `;
+
+        // Вставляем пустой абзац в нужное место
+        paragraphs.splice(index, 0, emptyParagraph);
+
+        return paragraphs;
+    }
+
+    addTextParagraph(paragraphs: string[], textId: string, rsid: string, index: number, fontSize: string = "28", text: string): string[] {
         const paraId = Math.random().toString(36).substr(2, 8).toUpperCase();
 
         // Генерация абзаца
@@ -200,6 +254,41 @@ export class FileCheckerService {
         return paragraphs;
     }
 
+    addTextParagraphWP(paragraphs: string[], textId: string, rsid: string, index: number, fontSize: string = "28", text: string): string[] {
+        const paraId = Math.random().toString(36).substr(2, 8).toUpperCase();
+
+        // Генерация абзаца
+        const textParagraph = `
+            <w:p w14:paraId="${paraId}" w14:textId="${textId}" w:rsidR="${rsid}" w:rsidRPr="${rsid}" w:rsidRDefault="${rsid}" w:rsidP="${rsid}">
+                <w:pPr>
+                    <w:spacing w:line="240" />
+                    <w:rPr>
+                        <w:sz w:val="${fontSize}"/>
+                        <w:szCs w:val="${fontSize}"/>
+                        <w:spacing w:val="1"/>
+                    </w:rPr>
+                    <w:jc w:val="left"/>
+                </w:pPr>
+                <w:r w:rsidRPr="${rsid}">
+                    <w:rPr>
+                        <w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/>
+                        <w:color w:val="000000" w:themeColor="text1"/>
+                        <w:sz w:val="28"/>
+                        <w:szCs w:val="28"/>
+                        <w:u w:val="none"/>
+                        <w:spacing w:val="0"/>
+                    </w:rPr>
+                    <w:t xml:space="preserve">${text} </w:t>
+                </w:r>
+            </w:p>
+        `;
+
+        // Вставляем абзац в нужное место
+        paragraphs.splice(index, 0, textParagraph);
+
+        return paragraphs;
+    }
+
     getRsidFromParagraph(paragraph: string): string | null {
         const rsidMatch = paragraph.match(/w:rsidR="([^"]+)"/);
         return rsidMatch ? rsidMatch[1] : null;
@@ -214,46 +303,61 @@ export class FileCheckerService {
         return xmlData.replace(/<w:highlight[^>]*\/>/g, '');
     } 
     
-    mergeTextBlocks(paragraphs: string[], keyword: string, startIndex: number): string {
-        // let matchedBlocks = [];
-        // for (let i = startIndex; i < paragraphs.length; i++) {
-        //     const paragraph = paragraphs[i];
+    mergeTextBlocks(paragraphs: string[], keyword: string, startIndex: number): void {
+        let matchedBlocks: string[] = [];
+        let combinedText = '';
     
-        //     // Найти все совпадения текста внутри <w:t>
-        //     const regex = new RegExp(`<w:t[^>]*>(.*?)<\/w:t>`, 'g');
-        //     const matches = [...paragraph.matchAll(regex)].map(match => match[1]);
+        // Итерируемся по параграфам, начиная с startIndex
+        for (let i = startIndex; i < paragraphs.length; i++) {
+            if (i > startIndex + 10) {
+                console.error(`Ошибка обработки заголовка ${matchedBlocks}`);
+                break;
+            }
+            const paragraph = paragraphs[i];
     
-        //     // Найти текст, совпадающий с текущим keyword
-        //     let foundIndex = -1;
+            // Найти все текстовые блоки внутри <w:t>
+            const regex = /<w:t[^>]*>(.*?)<\/w:t>/g;
+            const matches = [...paragraph.matchAll(regex)].map(match => match[1]);
+    
+            // Добавляем текст в matchedBlocks
+            matchedBlocks.push(...matches);
+    
+            // Проверяем, совпадает ли объединенный текст с keyword
+            combinedText = matchedBlocks.join(' ').trim().replace(/\s+/g, ' ');
+            const normalize = (str: string) => 
+                str.toLowerCase()
+                   .replace(/\s+/g, '') // Удаляем все пробелы
+                   .replace(/[.,!?]/g, ''); // Игнорируем пунктуацию
             
-        //     for (let j = 0; j < matches.length; j++) {
-        //         matchedBlocks.push(matches[j]);
-        //         if (matchedBlocks.join(' ') === keyword) {
-        //             foundIndex = j - matchedBlocks.length + 1;
-        //             break;
-        //         }
-        //     }
-
-        //     if (i > startIndex) {
-        //         paragraphs[i] = ''; // Полностью удаляем элемент массива
-        //     }            
+            if (normalize(combinedText) === normalize(keyword) && combinedText !== keyword) 
+                combinedText = keyword;
+            if (combinedText === keyword) {
+                // Объединяем текст в первом параграфе
+                const startMatch = paragraphs[startIndex].match(/<w:t[^>]*>(.*?)<\/w:t>/);
+                if (startMatch) {
+                    // Экранируем спецсимволы в combinedText
+                    const escapedText = combinedText
+                        .replace(/&/g, '&amp;')
+                        .replace(/</g, '&lt;')
+                        .replace(/>/g, '&gt;');
     
-        //     // Если совпадений нет или текст уже цельный, перейти к следующему параграфу
-        //     const normalizedMatchedBlocks = matchedBlocks.map(block => block.trim()).join(' ').replace(/\s+/g, ' ');
-        //     if (normalizedMatchedBlocks !== keyword) {
-        //         continue;
-        //     }
+                    // Заменяем текст в первом параграфе
+                    paragraphs[startIndex] = paragraphs[startIndex].replace(
+                        startMatch[0],
+                        `<w:t>${escapedText}</w:t>`
+                    );
+                }
     
-        //     // Скомбинировать текст из всех блоков
-        //     const combinedText = matchedBlocks.join(' ');
-        //     const startMatch = paragraphs[startIndex].match(/<w:t[^>]*>(.*?)<\/w:t>/);
-        //     paragraphs[startIndex] = paragraphs[startIndex].replace(startMatch[0],  `<w:t>` + combinedText + `</w:t>`);
+                // Удаляем оставшиеся параграфы
+                for (let j = startIndex + 1; j <= i; j++) {
+                    paragraphs[j] = ''; // Удаляем параграфы
+                }
     
-        //     return paragraphs[i] = paragraphs[i].replace(matches[foundIndex], combinedText);
-        // }
-        return 'bebra';
+                // Выходим из цикла
+                break;
+            }
+        }
     }
-    
     
 }
 
